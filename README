@@ -7,10 +7,28 @@ reports errors on ill-formed input.
 
 This project was completed on May 10, 2013 for a university compilers course.
 
+==== DEPENDENCIES ====
+
+The Java Cup (java_cup/) and JFlex (jflex/) tools are used to generate the
+compiler's lexer and parser classes and are both included with this project in
+conformance with their respective licenses.
+
+See:
+	http://www2.cs.tum.edu/projects/cup/
+	http://jflex.de/
+
+This project was developed in a Linux environment, and although the source code
+is written in portable Java, the peripheral scripts and Makefile may depend on
+commands or files not present on every system. These include dot, tempfile,
+gnome-open.
+
+Of course, you must have javac, java, and make installed to compile and execute
+the program (ant is not used).
+
 ==== BUILDING ====
 
 The Makefile provided contains rules for generating the C minor compiler from
-jflex, java_cup, and java source files as well as rules for compiling test
+JFlex, Java Cup, and java source files as well as rules for compiling test
 inputs using the generated compiler. All of the compiler code resides in the
 cminor Java package, and the main class which serves as the C Minor compiler is
 cminor.Compiler.
