@@ -1,0 +1,294 @@
+package cminor.parser;
+
+import cminor.lexer.Lexer;
+import cminor.ast.Program;
+import cminor.ast.ExternalDeclaration;
+import cminor.ast.FunctionDefinition;
+import cminor.ast.GlobalVariableDeclaration;
+import cminor.ast.GlobalVariableInitialization;
+import cminor.ast.Declaration;
+import cminor.ast.Initialization;
+import cminor.ast.Statement;
+import cminor.ast.PrintStatement;
+import cminor.ast.BlockStatement;
+import cminor.ast.IfStatement;
+import cminor.ast.IfElseStatement;
+import cminor.ast.WhileStatement;
+import cminor.ast.ReturnVoidStatement;
+import cminor.ast.ReturnValueStatement;
+import cminor.ast.Expression;
+import cminor.ast.Assignment;
+import cminor.ast.FunctionCall;
+import cminor.ast.IdentifierExpression;
+import cminor.ast.ConstantExpression;
+import cminor.ast.BooleanLiteral;
+import cminor.ast.CharacterLiteral;
+import cminor.ast.IntegerLiteral;
+import cminor.ast.StringLiteral;
+import cminor.ast.UnaryExpression;
+import cminor.ast.Negative;
+import cminor.ast.LogicalNot;
+import cminor.ast.BinaryExpression;
+import cminor.ast.Addition;
+import cminor.ast.Subtraction;
+import cminor.ast.Multiplication;
+import cminor.ast.Division;
+import cminor.ast.EqualTo;
+import cminor.ast.NotEqualTo;
+import cminor.ast.GreaterThan;
+import cminor.ast.GreaterThanOrEqualTo;
+import cminor.ast.LessThan;
+import cminor.ast.LessThanOrEqualTo;
+import cminor.ast.LogicalAnd;
+import cminor.ast.LogicalOr;
+import cminor.ast.Identifier;
+import cminor.ast.Parameter;
+import cminor.ast.TypeSpecifier;
+import cminor.semantic.Type;
+import cminor.semantic.ErrorLogger;
+
+action code {:
+
+	private LocationInfo info() {
+		return this.parser.info();
+	}
+
+:};
+
+parser code {:
+
+	private Lexer lexer;
+	private ErrorLogger logger;
+
+	public Lexer getLexer() { return this.lexer; }
+
+	public LocationInfo info() {
+		return this.lexer.info();
+	}
+
+	public void report_error(String message, Object o) {
+		this.logger.log(info(), message);
+	}
+
+	public void report_fatal_error(String message, Object o) {
+		this.logger.log(info(), message);
+	}
+
+	public void syntax_error(Symbol cur_token) {
+		this.logger.log(info(), cur_token.toString());
+	}
+
+	public void unrecovered_syntax_error(Symbol cur_token) {
+		/* Stay silent */
+	}
+
+:};
+
+init with {:
+
+	this.lexer = (Lexer) getScanner();
+	this.logger = this.lexer.getErrorLogger();
+
+:};
+
+terminal LPAREN, RPAREN, LBRACE, RBRACE, COMMA, SEMI;
+terminal ADD, SUB, STAR, DIV;
+terminal NOT, AND, OR;
+terminal EQ, NE, LE, LT, GE, GT;
+terminal ASSIGN;
+terminal FALSE, TRUE;
+terminal CHAR, INT, STRING, BOOLEAN, VOID;
+terminal PRINT, IF, ELSE, WHILE, RETURN;
+
+terminal Character CHAR_LITERAL;
+terminal String    STRING_LITERAL;
+terminal Integer   INT_LITERAL;
+terminal String    IDENTIFIER;
+
+terminal String    ERROR;
+
+non terminal Program                 program;
+non terminal ExternalDeclarationList edecl_list;
+non terminal ExternalDeclaration     edecl;
+non terminal TypeSpecifier           type_spec;
+non terminal BlockStatement          block;
+non terminal ConstantExpression      const_expr;
+non terminal DeclarationList         decl_list;
+non terminal Declaration             decl;
+non terminal Identifier              name_expr;
+non terminal ParameterList           opt_param_list;
+non terminal StatementList           stmt_list;
+non terminal Statement               stmt;
+non terminal ParameterList           param_list;
+non terminal Parameter               param;
+non terminal ArgumentList            opt_arg_list;
+non terminal ArgumentList            arg_list;
+non terminal Statement               matched_stmt;
+non terminal Statement               unmatched_stmt;
+non terminal Expression              expr;
+non terminal Expression              or_expr;
+non terminal Expression              and_expr;
+non terminal Expression              eq_expr;
+non terminal Expression              rel_expr;
+non terminal Expression              add_expr;
+non terminal Expression              mul_expr;
+non terminal Expression              unary_expr;
+non terminal Expression              atomic_expr;
+
+start with program;
+
+program ::=
+	  edecl_list:LIST {: RESULT = new Program(info(), LIST); :}
+	| error
+	;
+
+edecl_list ::=
+	  edecl_list:LEFT edecl:RIGHT {: LEFT.addLast(RIGHT); RESULT = LEFT; :}
+	| {: RESULT = new ExternalDeclarationList(); :}
+	| error SEMI
+	;
+
+edecl ::=
+	  type_spec:TYPE name_expr:NAME SEMI {: RESULT = new GlobalVariableDeclaration(info(), TYPE, NAME); :}
+        | type_spec:TYPE name_expr:NAME ASSIGN const_expr:VALUE SEMI {: RESULT = new GlobalVariableInitialization(info(), TYPE, NAME, VALUE); :}
+        | type_spec:TYPE name_expr:NAME LPAREN opt_param_list:PARAMS RPAREN block:BODY {: RESULT = new FunctionDefinition(info(), TYPE, NAME, PARAMS, BODY); :}
+	;
+
+type_spec ::=
+	  BOOLEAN {: RESULT = new TypeSpecifier(info(), Type.BOOLEAN); :}
+	| CHAR    {: RESULT = new TypeSpecifier(info(), Type.CHAR);    :}
+	| INT     {: RESULT = new TypeSpecifier(info(), Type.INT);     :}
+	| STRING  {: RESULT = new TypeSpecifier(info(), Type.STRING);  :}
+	| VOID    {: RESULT = new TypeSpecifier(info(), Type.VOID);    :}
+	;
+
+block ::=
+	  LBRACE decl_list:DECLS stmt_list:STMTS RBRACE {: RESULT = new BlockStatement(info(), DECLS, STMTS); :}
+	;
+
+decl_list ::=
+	  decl_list:LEFT decl:RIGHT {: LEFT.add(RIGHT); RESULT = LEFT; :}
+	| {: RESULT = new DeclarationList(); :}
+	;
+
+decl ::=
+	  type_spec:TYPE name_expr:NAME SEMI {: RESULT = new Declaration(info(), TYPE, NAME); :}
+	| type_spec:TYPE name_expr:NAME ASSIGN const_expr:VALUE SEMI {: RESULT = new Initialization(info(), TYPE, NAME, VALUE); :}
+	;
+
+stmt_list ::=
+	  stmt_list:LEFT stmt:RIGHT {: LEFT.add(RIGHT); RESULT = LEFT; :}
+	| {: RESULT = new StatementList(); :}
+	;
+
+stmt ::=
+	  matched_stmt:STMT {: RESULT = STMT; :}
+	| unmatched_stmt:STMT {: RESULT = STMT; :}
+	| error
+	;
+
+matched_stmt ::=
+	  IF LPAREN expr:CONDITION RPAREN matched_stmt:IFCLAUSE ELSE matched_stmt:ELSECLAUSE {: RESULT = new IfElseStatement(info(), CONDITION, IFCLAUSE, ELSECLAUSE); :}
+	| expr:EXPR SEMI {: RESULT = EXPR; :}
+	| block:BLOCK {: RESULT = BLOCK; :}
+	| PRINT arg_list:ARGS SEMI {: RESULT = new PrintStatement(info(), ARGS); :}
+	| WHILE LPAREN expr:CONDITION RPAREN matched_stmt:BODY {: RESULT = new WhileStatement(info(), CONDITION, BODY); :}
+	| RETURN expr:VALUE SEMI {: RESULT = new ReturnValueStatement(info(), VALUE); :}
+	| RETURN SEMI {: RESULT = new ReturnVoidStatement(info()); :}
+	;
+
+unmatched_stmt ::=
+	  IF LPAREN expr:CONDITION RPAREN stmt:IFCLAUSE {: RESULT = new IfStatement(info(), CONDITION, IFCLAUSE); :}
+	| IF LPAREN expr:CONDITION RPAREN matched_stmt:IFCLAUSE ELSE unmatched_stmt:ELSECLAUSE {: RESULT = new IfElseStatement(info(), CONDITION, IFCLAUSE, ELSECLAUSE); :}
+	;
+
+expr ::=
+	  name_expr:NAME ASSIGN expr:VALUE {: RESULT = new Assignment(info(), NAME, VALUE); :}
+	| or_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+or_expr ::=
+	  or_expr:LEFT OR and_expr:RIGHT {: RESULT = new LogicalOr(info(), LEFT, RIGHT); :}
+	| and_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+and_expr ::=
+	  and_expr:LEFT AND eq_expr:RIGHT {: RESULT = new LogicalAnd(info(), LEFT, RIGHT); :}
+	| eq_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+eq_expr ::=
+	  eq_expr:LEFT EQ rel_expr:RIGHT {: RESULT = new EqualTo(info(), LEFT, RIGHT); :}
+	| eq_expr:LEFT NE rel_expr:RIGHT {: RESULT = new NotEqualTo(info(), LEFT, RIGHT); :}
+	| rel_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+rel_expr ::=
+	  rel_expr:LEFT LT add_expr:RIGHT {: RESULT = new LessThan(info(), LEFT, RIGHT); :}
+	| rel_expr:LEFT GT add_expr:RIGHT {: RESULT = new GreaterThan(info(), LEFT, RIGHT); :}
+	| rel_expr:LEFT LE add_expr:RIGHT {: RESULT = new LessThanOrEqualTo(info(), LEFT, RIGHT); :}
+	| rel_expr:LEFT GE add_expr:RIGHT {: RESULT = new GreaterThanOrEqualTo(info(), LEFT, RIGHT); :}
+	| add_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+add_expr ::=
+	  add_expr:LEFT ADD mul_expr:RIGHT {: RESULT = new Addition(info(), LEFT, RIGHT); :}
+	| add_expr:LEFT SUB mul_expr:RIGHT {: RESULT = new Subtraction(info(), LEFT, RIGHT); :}
+	| mul_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+mul_expr ::=
+	  mul_expr:LEFT STAR unary_expr:RIGHT {: RESULT = new Multiplication(info(), LEFT, RIGHT); :}
+	| mul_expr:LEFT DIV unary_expr:RIGHT {: RESULT = new Division(info(), LEFT, RIGHT); :}
+	| unary_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+unary_expr ::=
+	  NOT unary_expr:ARG {: RESULT = new LogicalNot(info(), ARG); :}
+	| SUB unary_expr:ARG {: RESULT = new Negative(info(), ARG); :}
+	| atomic_expr:EXPR {: RESULT = EXPR; :}
+	;
+
+atomic_expr ::=
+	  LPAREN expr:MIDDLE RPAREN {: RESULT = MIDDLE; :}
+	| name_expr:NAME {: RESULT = new IdentifierExpression(info(), NAME); :}
+	| const_expr:VALUE {: RESULT = VALUE; :}
+	| name_expr:NAME LPAREN opt_arg_list:ARGS RPAREN {: RESULT = new FunctionCall(info(), NAME, ARGS); :}
+	;
+
+name_expr ::=
+	  IDENTIFIER:NAME {: RESULT = new Identifier(info(), NAME); :}
+	;
+
+const_expr ::=
+	  CHAR_LITERAL:VALUE {: RESULT = new CharacterLiteral(info(), VALUE); :}
+	| INT_LITERAL:VALUE {: RESULT = new IntegerLiteral(info(), VALUE); :}
+	| STRING_LITERAL:VALUE {: RESULT = new StringLiteral(info(), VALUE); :}
+	| TRUE {: RESULT = new BooleanLiteral(info(), true); :}
+	| FALSE {: RESULT = new BooleanLiteral(info(), false); :}
+	;
+
+opt_param_list ::=
+	  param_list:LIST {: RESULT = LIST; :}
+	| {: RESULT = new ParameterList(); :}
+	;
+
+param_list ::=
+	  param_list:LEFT COMMA param:RIGHT {: LEFT.add(RIGHT); RESULT = LEFT; :}
+	| param:PARAM {: ParameterList list = new ParameterList(); list.add(PARAM); RESULT = list; :}
+	;
+
+param ::=
+	  type_spec:TYPE IDENTIFIER:NAME {: RESULT = new Parameter(info(), TYPE, new Identifier(info(), NAME)); :}
+	;
+
+opt_arg_list ::=
+	  arg_list:LIST {: RESULT = LIST; :}
+	| {: RESULT = new ArgumentList(); :}
+	;
+
+arg_list ::=
+	  arg_list:LEFT COMMA expr:RIGHT {: LEFT.add(RIGHT); RESULT = LEFT; :}
+	| expr:ARG {: ArgumentList list = new ArgumentList(); list.add(ARG); RESULT = list; :}
+	;
+

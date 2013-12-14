@@ -1,0 +1,4 @@
+/* Invalid definition of main, which should have no parameters. */
+int main(int a, string b) {
+	return 2;
+}

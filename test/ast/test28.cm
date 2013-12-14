@@ -1,0 +1,2 @@
+void f() { print "hello world\n"; }
+int main() { f(); return 0; }

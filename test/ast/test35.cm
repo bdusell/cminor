@@ -1,0 +1,9 @@
+boolean b = false;
+int main() {
+	int i = 0;
+	while((i = i + 1) <= 10) {
+		b = !b;
+	}
+	print b, '\n';
+	return 0;
+}

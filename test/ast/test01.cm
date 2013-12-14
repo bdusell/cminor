@@ -1,0 +1,4 @@
+/* The bare minimum required of a program: a main function that exits. */
+int main() {
+	return 42;
+}

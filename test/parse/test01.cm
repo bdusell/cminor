@@ -1,0 +1,6 @@
+int a = 2;
+int b = 5;
+int main() {
+	print (a+, b+,10*a);
+	return b;
+}

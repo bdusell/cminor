@@ -1,0 +1,3 @@
+/* Function with parameters */
+void f(int a, string b) {}
+int main() { return 0; }

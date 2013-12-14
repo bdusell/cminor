@@ -1,0 +1,38 @@
+/* Syntax highlighting test file. */
+
+string TEST_STRING = "abcdef 12345 \" \' \0 \n \\ vwxyz";
+
+char TEST_CHAR_A = 'a';
+char TEST_CHAR_NULL = '\0';
+char TEST_CHAR_QUOTE = '\'';
+
+void f() { print "I do nothing\n"; }
+
+string btos(boolean b) {
+	if(b) return "yes";
+	else return "no";
+}
+
+boolean itob(int i) {
+	if(i == 0) return false;
+	else return true;
+}
+
+int main() {
+
+	// Make sure the universe is not broken
+	boolean b = 1 == 1;
+	if(b) {
+		print "The universe is not broken\n";
+	}
+	else return 1;
+
+	int i = 0;
+	while(i < 1) {
+		print "testing of universe correctness complete", '\n';
+		i = i + 1;
+	}
+
+	return 0;
+}
+

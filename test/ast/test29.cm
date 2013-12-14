@@ -1,0 +1,3 @@
+int a = 0;
+void f() { a = 5; }
+int main() { f(); print a, '\n'; return a; }

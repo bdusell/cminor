@@ -1,0 +1,4 @@
+int main() {
+	print 0, ' ', 1, ' ', 2, '\n';
+	return 0;
+}

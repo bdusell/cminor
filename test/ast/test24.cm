@@ -1,0 +1,14 @@
+int i;
+int main() {
+	i = 5;
+	{
+		{
+			int i;
+			i = 10;
+			print i, '\n';
+		}
+		i = 15;
+	}
+	print i, '\n';
+	return 0;
+}

@@ -1,0 +1,11 @@
+// test03: expressions
+int main() {
+        int i; boolean b; int x;
+        i = 0;
+        i = 365;
+        b = true;
+        b = false;
+        i = x;
+        x = i;
+}
+

@@ -1,0 +1,24 @@
+/* Short circuit logical operators. */
+
+boolean t() {
+	print true, " ";
+	return true;
+}
+
+boolean f() {
+	print false, " ";
+	return false;
+}
+
+int main() {
+	print "t && t => ", t() && t(), "\n";
+	print "t && f => ", t() && f(), "\n";
+	print "f && t => ", f() && t(), "\n";
+	print "f && f => ", f() && f(), "\n";
+	print "t || t => ", t() || t(), "\n";
+	print "t || f => ", t() || f(), "\n";
+	print "f || t => ", f() || t(), "\n";
+	print "f || f => ", f() || f(), "\n";
+	return 0;
+}
+

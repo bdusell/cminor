@@ -1,0 +1,12 @@
+// Syntax error, initializer not allowed to be a non constant
+string s1 = "hello";
+int i = 10;
+int j = 20;
+int func(int i) {
+    int k;
+    string s2 = "world";
+    i = j;
+    j = 10;
+    k = i + j;
+}
+

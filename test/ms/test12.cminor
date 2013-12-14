@@ -1,0 +1,5 @@
+// ERROR08: parameters and argument number mismatch
+int i;
+int func(int i) {
+    i = func(i, i);
+}

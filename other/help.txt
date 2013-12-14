@@ -1,0 +1,17 @@
+Usage: cminor [-h] [-t] [-s] [-l] [-o <output>] [<input.{cf,cminor}>]
+    <input>      Specifies the input file. If omitted or given as "-", the
+                 input is stdin.
+    -o <output>  Specifies the output file. Upon error no output file is
+                 created. If omitted, the output file has the name of the input
+                 file with its suffix replaced. If omitted and the input is
+                 stdin, or if the output file is given as "-", the output is
+                 stdout.
+    -t           Abstract syntax tree mode. Instead of compiling the program,
+                 generates dot code representing the abstract syntax tree of
+                 the input program.
+    -s           Symbol resolution mode. Generates dot code representing the
+                 abstract syntax tree of the input program, including nodes for
+                 resolved symbols.
+    -l           Only validates the input program for semantic correctness;
+                 does not generate any code.
+    -h           Prints this help message.

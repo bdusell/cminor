@@ -1,0 +1,5 @@
+int main() {
+	boolean b = true;
+	print "b = ", b, "\n";
+	return 0;
+}

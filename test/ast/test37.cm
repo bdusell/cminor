@@ -1,0 +1,10 @@
+string c = "hello world";
+/* Function argument type mismatch. */
+int f(int a, int b, string c) {
+	print a + b, c;
+	return a * b;
+}
+int main() {
+	int c = 5;
+	return f(1, 2, c);
+}

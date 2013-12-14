@@ -1,0 +1,3 @@
+/* Type mismatch in global variable initialization. */
+int i = "hello world";
+int main() { return 0; }

@@ -1,0 +1,33 @@
+// test01: global variable declarations without initializers
+int n;
+int m;
+char a;
+char b;
+string t;
+boolean C;
+boolean D;
+// test01: global variable declarations with initializers
+int i=10;
+int j=20;
+char c='x';
+string s = "abc";
+boolean A = true;
+boolean B = false;
+// function declaration without arguments and null body
+int func() {}
+// function declaration without arguments and just declarations
+int func() {
+    int n;
+    int m;
+    char a;
+    char b;
+    string t;
+    boolean C;
+    boolean D;
+    int i=10;
+    int j=20;
+    char c='x';
+    string s = "abc";
+    boolean A = true;
+    boolean B = false;
+}

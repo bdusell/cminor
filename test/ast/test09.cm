@@ -1,0 +1,10 @@
+/* Valid global variables. */
+boolean b;
+char c;
+int i;
+string s;
+boolean bb = true;
+char cc = '\'';
+int ii = 0;
+string ss = "";
+int main() { return 0; }

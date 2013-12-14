@@ -1,0 +1,7 @@
+int main() {
+	int i;
+	string s;
+	s = "hello" + "world";
+	i = 'h' < true;
+	return 0;
+}

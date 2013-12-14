@@ -1,0 +1,12 @@
+// Syntax error, initializer not allowed to be a non constant
+boolean x = 10;
+int z;
+int func(int i) {
+    int p;
+    int q;
+    p = q;
+    { boolean goofy = 90; int y; x = y;}
+    x = q;
+    x = p;
+}
+

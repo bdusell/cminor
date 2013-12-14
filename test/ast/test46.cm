@@ -1,0 +1,27 @@
+int y = 1;
+
+int f(int x, int y) {
+	print "x = ", x, ", y = ", y, '\n';
+	{
+		int a = 4;
+		int b = 5;
+		{
+			int b = 6;
+			int c = 7;
+			print "b = ", b, ", c = ", c, '\n';
+		}
+		print "a = ", a, ", b = ", b, '\n';
+		{
+			int b = 8;
+			int d = 9;
+			a = 10;
+			print "b = ", b, ", d = ", d, '\n';
+		}
+		print "a = ", a, ", b = ", b, '\n';
+	}
+	return x + y;
+}
+
+int main() {
+	return f(2, 3);
+}

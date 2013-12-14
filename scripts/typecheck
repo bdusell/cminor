@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+	echo 'Usage: typecheck <cminor file>'
+	exit 2
+fi
+
+make >& /dev/null || exit 1
+CFFILE=$1
+echo "==== File $CFFILE ===="
+cat "$CFFILE"
+echo "==== ===="
+java cminor.Compiler -l "$CFFILE"
+echo "Return Code: $?"
+

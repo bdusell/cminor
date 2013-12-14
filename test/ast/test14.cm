@@ -1,0 +1,3 @@
+/* Missing return value. */
+int f() { return; }
+int main() { return 0; }

@@ -1,0 +1,7 @@
+/* Some valid global variables and an invalid void global variable. */
+boolean b = true;
+char c = 'Q';
+int i = 4;
+string s = "hello\nworld";
+void v = "I am void";
+int main() { return 0; }

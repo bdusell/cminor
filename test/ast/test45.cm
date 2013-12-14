@@ -1,0 +1,10 @@
+int main() {
+	if(true == false) {
+		print "true == false\n";
+		return 0;
+	}
+	else {
+		print "true != false\n";
+		return 1;
+	}
+}

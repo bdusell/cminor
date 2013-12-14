@@ -1,0 +1,20 @@
+// test04: expressions
+int main() {
+    int a; int b; int c; int d;
+
+    a = b + c;
+    a = b - c;
+    a = b * c;
+    a = b / c;
+    a = -b;
+
+    d = a - b - c;
+    d = a * b * c;
+    d = a + b * c;
+    d = a * b + c;
+
+    d = (a - b) - c;
+    d = a - (b - c);
+    d = (a + b) * c;
+    d = a * (b + c);
+}

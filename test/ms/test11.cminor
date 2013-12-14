@@ -1,0 +1,6 @@
+// ERROR02: duplicate declaration of i, parameter and inside 
+int i;
+int func(int i) {
+    int i;
+    i = func(i);
+}

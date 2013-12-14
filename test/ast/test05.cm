@@ -1,0 +1,3 @@
+/* An invalid global variable declaration with type void. */
+void i;
+int main() { return 0; }

@@ -1,0 +1,3 @@
+/* A valid program with a global variable declaration. */
+int i;
+int main() { return 0; }

@@ -1,0 +1,9 @@
+int main() {
+	if(false == false) {
+		print "false == false\n";
+	}
+	if(false == true) {
+		print "false == true\n";
+	}
+	return 0;
+}

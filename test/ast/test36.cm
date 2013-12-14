@@ -1,0 +1,12 @@
+boolean b = false;
+int main() {
+	int i = 0;
+	string s1 = "true";
+	string s2 = "apple";
+	while((i = i + 1) <= 10) {
+		b = !b;
+	}
+	print b, '\n';
+	print s2, "\n";
+	return 0;
+}

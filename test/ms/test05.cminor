@@ -1,0 +1,16 @@
+// test05: expressions
+int main() {
+    int x; int y; boolean r;
+
+    r = !(x < y);
+
+    r = !!(x == y);
+
+    if( !(x > y) ) r = true;
+    else r = false;
+
+    if( !!(x != y) ) r = true;
+    else r = false;
+
+}
+

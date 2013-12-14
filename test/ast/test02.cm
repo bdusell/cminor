@@ -1,0 +1,4 @@
+/* A program with an incorrect definition of main, which should return an int. */
+void main() {
+
+}

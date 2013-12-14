@@ -1,0 +1,24 @@
+/* Lots of stuff that goes in the data section. */
+
+int     num_instances = 0;
+char    marker        = '*';
+boolean flag;
+char    inputChar;
+string  msg           = "false";
+boolean debug         = true;
+int     returnVal;
+string  tempString;
+
+void init(string s) {
+	print s, "flag = ", flag = !false, ", ";
+	print "inputChar = ", inputChar = 'a', ", ";
+	print "returnVal = ", returnVal = 0, ", ";
+	print "tempString = \"", tempString = "alpha", "\"\n";
+}
+
+int main() {
+	returnVal = 0;
+	init("Initializing: ");
+	return returnVal;
+}
+

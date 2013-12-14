@@ -1,0 +1,5 @@
+int i = 5;
+int main() {
+	print i, '\n';
+	return 0;
+}

@@ -1,0 +1,13 @@
+/* Tricky format strings. */
+char sp = ' ';
+char endl = '\n';
+boolean b = false;
+int main() {
+	print "trying to %s hack printf\n";
+	print "trying to %", "s hack printf\n";
+	print "trying to ", '%', "s hack printf\n";
+	print "trying to ", '%', 's', ' ', 'h', "ack printf\n";
+	print "trying", sp, "to", sp, "%s", sp, "hack printf\n";
+	print "trying", sp, "to", sp, "%s", sp, "hack printf", endl;
+	return 40;
+}

@@ -1,0 +1,3 @@
+/* Valid global variable initialization. */
+int i = 25;
+int main() { return 0; }
