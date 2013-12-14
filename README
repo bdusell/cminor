@@ -45,7 +45,7 @@ use
 	% make test/ast/<filename>
 
 to attempt to use the C Minor compiler to produce x86 code from the
-corresponding .cf file, assemble it, and link it into an executable.
+corresponding .cm file, assemble it, and link it into an executable.
 
 There is another test in the test/ms/ directory which pulls together several
 aspects of the project. It is the Fibonacci program provided for the syntax
