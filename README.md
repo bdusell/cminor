@@ -115,32 +115,33 @@ stack.
 State of Completion
 -------------------
 
-All required functionality currently appears to be working. There is, of
-course, no guarantee that the compiler or the programs which it generates will
-not bug out unexpectedly, but the experience of using them so far suggest that
-the compiler is generally quite sound. It works on all test programs provided.
+All intended functionality appears to be working, and the program works on all
+test inputs provided. The experience of using the compiler suggests that it is
+generally quite sound, but of course there is no guarantee that there are no
+hidden bugs, that there isn't a glitch in the matrix, and that the entire
+universe isn't just a hologram.
 
 The compiler implements (or at least supposes to implement) the following
 features:
 
 * Error checking during the scanning phase
 * Error recovery during the parsing phase
-* Location information for errors in the input and descriptive error
+* Input file location information for errors in the input and descriptive error
   messages for semantic errors
-* Validation that a main function exists with the correct signature
-* Validation that functions with non-void return types return values in
+* Validation that a `main` function exists with the correct signature
+* Validation that functions with non-`void` return types return values in
   all branches of execution
 * Detection of unreachable statements
 * Use of a string table to minimize the number of string literals
   included in the resulting program
-* Packing of constant values into the format strings used by the calls
-  to printf which underlie print statements
-* Ensurance that the literal arguments to print cannot be used to
-  insert extra format specifiers that break the underlying printf
-  implementation
-* Printing of "true" and "false" for boolean values
+* Packing of constant values, at compile time, into the format strings used by
+  the calls to `libc`'s `printf` which underlie C Minor `print` statements
+* Ensurance that the literal arguments to `print` cannot be used to
+  insert extra format specifiers that break the underlying `printf`
+  format specifiers
+* Printing of `true` and `false` for boolean values
 * Implementation of lexical scoping rules
-* Control flow statements if, else, and while
+* Control flow statements `if`, `else`, and `while`
 * Short-circuited logical operators
 * Awesomeness
 
