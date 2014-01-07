@@ -23,7 +23,7 @@ conformance with their respective licenses.
 This project was developed in a Linux environment, and although the source code
 is written in portable Java, the peripheral scripts and Makefile may depend on
 commands or files not present on every system. These include `dot`, `tempfile`,
-xdg-open.
+`xdg-open`.
 
 Of course, you must have `javac`, `java`, and `make` installed to compile and execute
 the program (`ant` is not used).
