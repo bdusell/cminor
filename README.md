@@ -1,7 +1,7 @@
 C Minor Compiler
 ----------------
 
-![Abstract Syntax Tree](../bdusell.github.io/img/ast.png)
+![Abstract Syntax Tree](other/ast.png)
 
 This is a Java-implemented compiler for a miniature programming language called
 "C Minor." The Makefile generates a Java program which reads C Minor code as
