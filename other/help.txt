@@ -1,4 +1,4 @@
-Usage: cminor [-h] [-t] [-s] [-l] [-o <output>] [<input.{cf,cminor}>]
+Usage: cminor [-h] [-t] [-s] [-l] [-o <output>] [<input.{cm,cminor}>]
     <input>      Specifies the input file. If omitted or given as "-", the
                  input is stdin.
     -o <output>  Specifies the output file. Upon error no output file is
