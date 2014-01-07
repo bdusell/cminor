@@ -1,20 +1,16 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]; then
-	echo 'Usage: resolve <cminor file>'
-	exit 1
-fi
-
-make >& /dev/null || exit 1
-CFFILE=$1
-DOTCODE=$(java cminor.Compiler -s -o - "$CFFILE")
-RC=$?
-echo "==== File $CFFILE ===="
-cat "$CFFILE"
-echo "==== ===="
-if [ $RC -eq 0 ]; then
-	IMG=$(tempfile -s .png)
-	echo "$DOTCODE" | dot -Tpng > "$IMG"
-	gnome-open "$IMG" >& /dev/null
-fi
+[ $# -eq 1 -a -f "$1" ] || { echo 'Usage: resolve <cminor file>'; exit 1; }
+make && {
+	FIN=$1
+	OUT=$(java cminor.Compiler -s -o - "$FIN") && {
+		echo "==== $FIN ===="
+		cat "$FIN"
+		echo "==== Displaying AST with resolved symbols... ===="
+		IMG=$(tempfile -s .png)
+		echo "$OUT" | dot -Tpng -o "$IMG"
+		xdg-open "$IMG"
+	}
+}
+exit $?
 

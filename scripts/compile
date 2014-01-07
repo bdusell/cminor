@@ -1,9 +1,14 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]; then echo "Usage: compile <cminor file>"; exit 2; fi
+[ $# -eq 1 -a -f "$1" ] || { echo 'Usage: compile <cminor file>'; exit 1; }
+make && {
+	FIN=$1
+	OUT=$(java cminor.Compiler -o - "$FIN") && {
+		echo "==== $FIN ===="
+		cat "$FIN"
+		echo "==== x86 Code ===="
+		echo "$OUT"
+	}
+}
+exit $?
 
-make >& /dev/null || exit 1
-echo "==== $1 ===="
-cat "$1"
-echo "==== x86 ===="
-java cminor.Compiler -o - "$1"

@@ -24,7 +24,7 @@ endif
 COMPILE=$(JAVAC) $<
 ASSEMBLE=as -32 -o $@ $<
 LINK=ld -m elf_i386 -o $@ $< $(LIB) -dynamic-linker /lib/ld-linux.so.2
-CFCOMPILE=java cminor.Compiler $<
+CMCOMPILE=java cminor.Compiler $<
 
 # Source files
 GENERATED_JAVA_SRC=cminor/lexer/$(LEXER).java cminor/parser/$(PARSER).java cminor/parser/$(SYMBOL).java
@@ -51,7 +51,7 @@ cminor/parser/$(PARSER).java cminor/parser/$(SYMBOL).java: cminor/parser/$(PARSE
 	$(MV) $(SYMBOL).java $(PARSER).java cminor/parser
 
 %.s: %.cm $(JAVA_CLASS)
-	$(CFCOMPILE)
+	$(CMCOMPILE)
 
 %.o: %.s
 	$(ASSEMBLE)
@@ -60,7 +60,7 @@ test/ast/test%: test/ast/test%.o
 	$(LINK)
 
 test/ms/test.s: test/ms/test.cminor $(JAVA_CLASS)
-	$(CFCOMPILE)
+	$(CMCOMPILE)
 
 test/ms/test: test/ms/test.o
 	$(LINK)
