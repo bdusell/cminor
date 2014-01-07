@@ -52,8 +52,9 @@ The C Minor compiler has a number of different options and modes. These options
 can be used to control whether the compiler reads from `stdin` or from a file,
 writes code to `stdout` or a file, and generates x86 code or dot code for
 visualizing the abstract syntax tree. Without any arguments the compiler reads
-C Minor from stdin and sends compiled x86 code to stdout if the input is valid.
-In order to see all of the available options, use
+C Minor from `stdin` and sends compiled x86 code to `stdout` if the input is valid.
+Errors are otherwise reported on `stderr`. In order to see all of the available
+options, use
 
     java cminor.Compiler -h
 
