@@ -120,7 +120,7 @@ All intended functionality appears to be working, and the program works on all
 test inputs provided. The experience of using the compiler suggests that it is
 generally quite sound, but of course there is no guarantee that there are no
 hidden bugs, that there isn't a glitch in the matrix, and that the entire
-universe isn't just a hologram.
+universe isn't just a hologram. Seriously though, it's quite solid.
 
 The compiler implements (or at least supposes to implement) the following
 features:
