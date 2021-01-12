@@ -6,6 +6,8 @@ input and prints compiled AT&T-syntax x86 assembly code as output, or else
 reports errors on ill-formed input.
 
 This project was completed on May 10, 2013 for a university compilers course.
+It is released under an MIT license, except for any library source code covered
+by its own license.
 
 ==== DEPENDENCIES ====
 
